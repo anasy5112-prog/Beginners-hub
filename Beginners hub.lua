@@ -25,9 +25,9 @@ local Window = Rayfield:CreateWindow({
 
    KeySystem = false,
    KeySettings = {
-      Title = "nil",
+      Title = "Nothing also",
       Subtitle = "Key System",
-      Note = "nil",
+      Note = "Nothing",
       FileName = "Key",
       SaveKey = true,
       GrabKeyFromSite = false,
@@ -40,7 +40,7 @@ local MiscTab = Window:CreateTab("Misc", 4483362458)
 Rayfield:Notify({
    Title = "Executed",
    Content = "You Executed the script sucessfully",
-   Duration = 6.5,
+   Duration = 3.5,
    Image = 4483362458,
 })
 
@@ -61,3 +61,4 @@ local Toggle = MiscTab:CreateToggle({
 
    end,
 })
+ 
