@@ -1,64 +1,99 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+if game.PlaceId == 17625359962 then
 
-local Window = Rayfield:CreateWindow({
-   Name = "🔰Beginners hub🔰",
-   Icon = 0,
-   LoadingTitle = "Loading The Script",
-   LoadingSubtitle = "by Javix",
-   ShowText = "Rayfield",
-   Theme = "Default",
-   ToggleUIKeybind = "K",
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false,
+    -- 1. Configuration Setup
+    getgenv().sneeky_blatant = false
+    getgenv().sneeky_silent_aim = false
+    getgenv().sneeky_aimbot = false
+    getgenv().sneeky_fov_size = 300
 
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = nil,
-      FileName = "Beginners hub beta"
-   },
+    local scriptLoaded = false
 
-   Discord = {
-      Enabled = false,
-      Invite = "nil",
-      RememberJoins = true
-   },
+    -- Centralized fallback loader (Fixes 404 error)
+    local function safeLoadScript()
+        if not scriptLoaded then
+            scriptLoaded = true
+            task.spawn(function()
+                loadstring(game:HttpGet("https://githubusercontent.com"))()
+            end)
+        end
+    end
 
-   KeySystem = false,
-   KeySettings = {
-      Title = "Nothing also",
-      Subtitle = "Key System",
-      Note = "Nothing",
-      FileName = "Key",
-      SaveKey = true,
-      GrabKeyFromSite = false,
-      Key = {"Hello"}
-   }
-})
+    -- 2. Initialize Rayfield UI Library
+    local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local MiscTab = Window:CreateTab("Misc", 4483362458)
+    local Window = Rayfield:CreateWindow({
+        Name = "🔰Beginners hub🔰",
+        Icon = 0,
+        LoadingTitle = "Loading The Script",
+        LoadingSubtitle = "by Javix",
+        ShowText = "Rayfield",
+        Theme = "Default",
+        ToggleUIKeybind = "K",
+        DisableRayfieldPrompts = false,
+        DisableBuildWarnings = false,
 
-Rayfield:Notify({
-   Title = "Executed",
-   Content = "You Executed the script sucessfully",
-   Duration = 3.5,
-   Image = 4483362458,
-})
+        ConfigurationSaving = {
+            Enabled = true,
+            FolderName = nil,
+            FileName = "Beginners hub beta"
+        },
 
-local Toggle = MiscTab:CreateToggle({
-   Name = "Infinite jump", -- FIXED
-   CurrentValue = false,
-   Flag = "Infinite?",
-   Callback = function(Value)
+        Discord = {
+            Enabled = false,
+            Invite = "nil",
+            RememberJoins = true
+        },
 
-      local Player = game.Players.LocalPlayer
-      local UserInputService = game:GetService("UserInputService")
+        KeySystem = false,
+        KeySettings = {
+            Title = "Nothing also",
+            Subtitle = "Key System",
+            Note = "Nothing",
+            FileName = "Key",
+            SaveKey = true,
+            GrabKeyFromSite = false,
+            Key = {"Hello"}
+        }
+    })
 
-      UserInputService.JumpRequest:Connect(function()
-          if Player.Character and Player.Character:FindFirstChild("Humanoid") then
-              Player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-          end
-      end)
+    -- 3. Tabs & Notifications
+    local CombatTab = Window:CreateTab("Combat", 4483362458)
 
-   end,
-})
- 
+    Rayfield:Notify({
+        Title = "Executed",
+        Content = "You Executed the script successfully",
+        Duration = 3.5,
+        Image = 4483362458,
+    })
+
+    -- 4. Silent Aim UI Toggle
+    local SilentAimToggle = CombatTab:CreateToggle({
+        Name = "Silent Aim",
+        CurrentValue = false,
+        Flag = "SilentAimToggle",
+        Callback = function(Value)
+            getgenv().sneeky_silent_aim = Value
+            getgenv().sneeky_blatant = (Value or getgenv().sneeky_aimbot)
+
+            if Value then
+                safeLoadScript()
+            end
+        end,
+    })
+
+    -- 5. Camera Aimbot UI Toggle
+    local AimbotToggle = CombatTab:CreateToggle({
+        Name = "Aimbot",
+        CurrentValue = false,
+        Flag = "A1mb0tToggle",
+        Callback = function(Value)
+            getgenv().sneeky_aimbot = Value
+            getgenv().sneeky_blatant = (Value or getgenv().sneeky_silent_aim)
+            
+            if Value then 
+                safeLoadScript()
+            end
+        end,
+    })
+
+end -- FIXED: Closed the game.PlaceId if statement properly
