@@ -76,7 +76,7 @@ if game.PlaceId == 17625359962 then
     end
 
     -- 3. Initialize Rayfield UI Library (FIXED LINK BELOW)
-    local Rayfield = loadstring(game:HttpGet('https://sirius.menu'))()
+    local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
     local Window = Rayfield:CreateWindow({
         Name = "🔰Beginners hub🔰",
