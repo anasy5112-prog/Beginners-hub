@@ -7,16 +7,15 @@ if game.PlaceId == 17625359962 then
 
     local run_service = game:GetService("RunService")
     local players = game:GetService("Players")
-    local user_input_service = game:GetService("UserInputService")
-
-    local local_player = players.LocalPlayer
     local camera = workspace.CurrentCamera
 
     local closest = nil
 
-    -- 2. Your Provided Rivals Proximity Target Finder
+    -- 2. Fixed Target Finder (Uses Mobile Screen Center Instead of PC Mouse)
     local function get_closest_player()
         local closest_distance, player = math.huge, nil
+        -- Finds the exact center point of your iOS screen
+        local screen_center = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
 
         for _, value in ipairs(players:GetPlayers()) do
             if value ~= local_player then
@@ -28,7 +27,8 @@ if game.PlaceId == 17625359962 then
                 if not root_part or (humanoid and humanoid.Health <= 0) then continue end
 
                 local screen_position, visible = camera:WorldToViewportPoint(root_part.Position)
-                local distance = (Vector2.new(screen_position.X, screen_position.Y) - user_input_service:GetMouseLocation()).Magnitude
+                -- Measures distance relative to the center of your mobile screen
+                local distance = (Vector2.new(screen_position.X, screen_position.Y) - screen_center).Magnitude
 
                 if not visible then continue end
 
@@ -60,6 +60,7 @@ if game.PlaceId == 17625359962 then
     end)
 
     -- 3. High-Security Game UI Module Interception (Your Script Core)
+    local local_player = players.LocalPlayer
     local common_functions = require(local_player.PlayerGui.GameUI.ClientMaster.CommonFunctions)
     local old_func = common_functions.RayCast
 
@@ -76,46 +77,43 @@ if game.PlaceId == 17625359962 then
         return old_func(origin, direction, i_dont_know_what_this_is, idk_either_but_probably_ignore_list)
     end
 
-    -- 4. Initialize Official Rayfield Library (YOUR LINK)
-    local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+    -- 4. Initialize Rayfield Gen2 UI Library
+    local Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))()
 
     local Window = Rayfield:CreateWindow({
-        Name = "🔰Beginners hub🔰",
-        Icon = 0,
-        LoadingTitle = "Loading The Script",
-        LoadingSubtitle = "by Javix",
-        ShowText = "Rayfield",
-        Theme = "Default",
-        ToggleUIKeybind = "K",
-        DisableRayfieldPrompts = false,
-        DisableBuildWarnings = false,
-
-        ConfigurationSaving = {
-            Enabled = true,
-            FolderName = "BeginnersHub",
-            FileName = "config"
+        name = "🔰Beginners hub🔰",
+        subtitle = "by Javix",
+        theme = "Default",
+        loading = true,
+        loadingtitle = "Loading The Script",
+        loadingsubtitle = "by Javix",
+        configurationSaving = {
+            enabled = true,
+            folderName = "BeginnersHub",
+            fileName = "config"
         }
     })
 
-    -- 5. Tabs Setup
-    local CombatTab = Window:CreateTab("Combat", 4483362458)
+    -- 5. Tabs Setup (FIXED: Converted to Gen2 dictionary format)
+    local CombatTab = Window:CreateTab({
+        name = "Combat",
+        icon = 4483362458
+    })
 
-    -- 6. Silent Aim UI Toggle (Fixed casing parameters for original Rayfield syntax)
-    local SilentAimToggle = CombatTab:CreateToggle({
-        Name = "Silent Aim",
-        CurrentValue = false,
-        Flag = "SilentAimToggle",
-        Callback = function(Value)
+    -- 6. Silent Aim UI Toggle (FIXED: Uses lowercase parameters for Gen2)
+    CombatTab:CreateToggle({
+        name = "Silent Aim",
+        currentValue = false,
+        callback = function(Value)
             getgenv().sneeky_silent_aim = Value
         end,
     })
 
-    -- 7. Camera Aimbot UI Toggle
-    local AimbotToggle = CombatTab:CreateToggle({
-        Name = "Aimbot",
-        CurrentValue = false,
-        Flag = "A1mb0tToggle",
-        Callback = function(Value)
+    -- 7. Camera Aimbot UI Toggle (FIXED: Uses lowercase parameters for Gen2)
+    CombatTab:CreateToggle({
+        name = "Aimbot",
+        currentValue = false,
+        callback = function(Value)
             getgenv().sneeky_aimbot = Value
         end,
     })
