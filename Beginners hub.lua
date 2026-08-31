@@ -38,7 +38,7 @@ local Window = Rayfield:CreateWindow({
       RememberJoins = true
    },
 
-   KeySystem = true, -- ✅ Enabled
+   local key = KeySystem = true, -- ✅ Enabled
    KeySettings = {
       Title = "🔰Beginners hub🔰 | Key",
       Subtitle = "Key System",
@@ -48,4 +48,18 @@ local Window = Rayfield:CreateWindow({
       GrabKeyFromSite = false,
       Key = keys -- ✅ Uses your Pastebin keys
    }
+})
+
+local Button = key:CreateButton({
+    Name = "Copy link",
+    Callback = function()
+        -- Copies your Pastebin link to clipboard
+        setclipboard("https://pastebin.com/raw/nVYtFJec")
+        Rayfield:Notify({
+            Title = "Copied!",
+            Content = "The link has been copied to your clipboard.",
+            Duration = 3,
+            Image = 4483362458,
+        })
+    end,
 })
