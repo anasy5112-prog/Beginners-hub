@@ -44,7 +44,7 @@ local Window = Rayfield:CreateWindow({
       Subtitle = "Key System",
       Note = "Keys from Pastebin",
       FileName = "BeginnersHubKey",
-      SaveKey = true,
+      SaveKey = false,
       GrabKeyFromSite = false,
       Key = keys -- ✅ Uses your Pastebin keys
    }
