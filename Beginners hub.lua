@@ -1,6 +1,6 @@
 if game.PlaceId == 17625359962 then
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(http_request({Url = "https://sirius.menu/rayfield"}).Body)()
 
 local Window = Rayfield:CreateWindow({
    Name = "🔰Beginners hub🔰",
