@@ -1,5 +1,4 @@
-local Rayfield = loadstring(http_request({Url = "https://sirius.menu/rayfield"}).Body)()
-
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "🔰Beginners hub🔰",
    Icon = 0,
