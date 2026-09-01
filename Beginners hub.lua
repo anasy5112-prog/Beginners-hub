@@ -1,5 +1,11 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))();
+-- Load Rayfield
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+if not Rayfield then
+    warn("Rayfield failed to load")
+    return
+end
 
+-- Create Window
 local Window = Rayfield:CreateWindow({
    Name = "🔰Beginners hub🔰",
    Icon = 0,
@@ -7,24 +13,19 @@ local Window = Rayfield:CreateWindow({
    LoadingSubtitle = "by Javix",
    ShowText = "Rayfield",
    Theme = "Default",
-
    ToggleUIKeybind = "K",
-
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false,
-
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = nil,
+      FolderName = "vbsfkbfdghbfd",
       FileName = "Big Hub"
    },
-
    Discord = {
       Enabled = false,
       Invite = "noinvitelink",
       RememberJoins = true
    },
-
    KeySystem = false,
    KeySettings = {
       Title = "🔰Beginners hub🔰 | Key",
@@ -33,7 +34,7 @@ local Window = Rayfield:CreateWindow({
       FileName = "BeginnersHubKey",
       SaveKey = false,
       GrabKeyFromSite = false,
-      Key = keys
+      Key = "none" -- FIXED
    }
 })
 
@@ -46,11 +47,10 @@ Rayfield:Notify({
 
 -- Movement Tab
 local MovementTab = Window:CreateTab("Main", 4483362458)
-
 local walkSpeedValue = 16
 local jumpPowerValue = 20
 
-local Slider = MovementTab:CreateSlider({
+MovementTab:CreateSlider({
    Name = "Walkspeed",
    Range = {0, 100},
    Increment = 1,
@@ -63,7 +63,7 @@ local Slider = MovementTab:CreateSlider({
    end,
 })
 
-local Slider = MovementTab:CreateSlider({
+MovementTab:CreateSlider({
    Name = "JumpPower",
    Range = {0, 250},
    Increment = 1,
@@ -76,7 +76,7 @@ local Slider = MovementTab:CreateSlider({
    end,
 })
 
-local Toggle = MovementTab:CreateToggle({
+MovementTab:CreateToggle({
     Name = "Enable Walkspeed Config",
     CurrentValue = false,
     Flag = "grdfgdge",
@@ -90,7 +90,7 @@ local Toggle = MovementTab:CreateToggle({
     end,
 })
 
-local Slider = MovementTab:CreateSlider({
+MovementTab:CreateSlider({
     Name = "Slide Multiplier",
     Range = {0, 100},
     Increment = 1,
@@ -99,25 +99,20 @@ local Slider = MovementTab:CreateSlider({
     Flag = "rorfwgoefuyvwe",
     Callback = function(Value)
         local humanoid = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
-        local baseSlideSpeed = humanoid.WalkSpeed
-        local slideSpeed = baseSlideSpeed * Value
-        humanoid.WalkSpeed = slideSpeed
-        print("Slide multiplier set to:", Value, "→ Slide speed:", slideSpeed)
+        humanoid.WalkSpeed = walkSpeedValue * Value
     end,
 })
 
 -- Combat Tab
 local CombatTab = Window:CreateTab("Combat", 4483362458)
-
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 local Camera = workspace.CurrentCamera
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local silentAimActive = false
 
-local Toggle = CombatTab:CreateToggle({
+CombatTab:CreateToggle({
     Name = "Silent Aim",
     CurrentValue = false,
     Flag = "qsafeawe",
@@ -156,12 +151,11 @@ end)
 
 -- Visual Tab
 local VisualTab = Window:CreateTab("Visual", 4483362458)
-
 local RunService = game:GetService("RunService")
 local espList = {}
 local espActive = false
 
-local Toggle = VisualTab:CreateToggle({
+VisualTab:CreateToggle({
     Name = "ESP",
     CurrentValue = false,
     Flag = "SBACOD",
@@ -172,6 +166,7 @@ local Toggle = VisualTab:CreateToggle({
 
 local function createESP(player)
     if player == LocalPlayer then return end
+    if not Drawing then return end -- FIXED: prevent nil error
     local box = Drawing.new("Quad")
     box.Thickness = 2
     box.Color = Color3.fromRGB(0, 0, 255)
@@ -220,5 +215,3 @@ RunService.RenderStepped:Connect(function()
         end
     end
 end)
-
-end
